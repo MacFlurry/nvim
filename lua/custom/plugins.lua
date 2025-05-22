@@ -16,5 +16,19 @@ local plugins = {
       { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Lazygit" }
     }
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      on_attach = require("custom.chadrc").on_attach_nvim_tree,
+      actions = {
+        open_file = {
+          quit_on_open = false,
+          window_picker = {
+            enable = false,
+          },
+        },
+      },
+    },
+  },
 }
 return plugins
