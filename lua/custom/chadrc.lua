@@ -1,6 +1,6 @@
 vim.opt.mouse = 'a' -- Enable mouse support in all modes
-vim.opt.timeoutlen = 1000 -- Time to wait for mapped sequence
-vim.opt.ttimeoutlen = 10 -- Time to wait for key codes
+vim.opt.timeoutlen = 500 -- Délai pour les mappings normaux
+vim.opt.ttimeoutlen = 10 -- Délai pour les codes de touches
 
 vim.opt.relativenumber = true
 
