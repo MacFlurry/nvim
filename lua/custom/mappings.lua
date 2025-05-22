@@ -70,7 +70,10 @@ M.general = {
       })
       vim.diagnostic.open_float()
     end, "Show All Diagnostics Including Hints" },
-    ["<leader>dc"] = { "<cmd>lclose<cr>", "Close Diagnostics Window" },
+    ["<leader>dc"] = { function()
+      vim.cmd("cclose")
+      vim.cmd("lclose")
+    end, "Fermer Quickfix et Loclist" },
     ["<leader>dq"] = { "<cmd>cclose<cr>", "Close Quickfix Window" },
     ["<leader>dt"] = { function()
       local config = vim.diagnostic.config()
