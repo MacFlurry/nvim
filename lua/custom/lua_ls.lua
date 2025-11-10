@@ -1,7 +1,5 @@
 -- lua/custom/lua_ls.lua
-local lspconfig = require("lspconfig")
-
-lspconfig.lua_ls.setup {
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = {
@@ -22,4 +20,4 @@ lspconfig.lua_ls.setup {
       telemetry = { enable = false },
     },
   },
-}
+})

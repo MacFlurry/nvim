@@ -1,13 +1,13 @@
-local on_attach = require("plugins.configs.lspconfig").on_attach
-local capabilities = require("plugins.configs.lspconfig").capabilities
+local lsp_defaults = require "plugins.configs.lspconfig"
+local on_attach = lsp_defaults.on_attach
+local capabilities = lsp_defaults.capabilities
 
-local lspconfig = require("lspconfig")
-local util = require "lspconfig/util"
+local util = require "lspconfig.util"
 
-lspconfig.gopls.setup {
+vim.lsp.config("gopls", {
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = {"gopls"},
+  cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
@@ -19,16 +19,16 @@ lspconfig.gopls.setup {
       },
     },
   },
-}
+})
 
-lspconfig.pyright.setup {
+vim.lsp.config("pyright", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "python" },
-}
+})
 
-lspconfig.ruff.setup {
+vim.lsp.config("ruff", {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "python" },
-}
+})
