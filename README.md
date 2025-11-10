@@ -27,20 +27,15 @@ A modern Neovim setup based on [NVChad](https://nvchad.com/), with advanced Go a
 - [`lazygit`](https://github.com/jesseduffield/lazygit) si vous voulez utiliser la commande `<leader>gg` / `:LazyGit`
 
 ### Stack Go
-- [Go](https://go.dev/dl/) >= 1.21 avec `GOPATH` configuré pour pouvoir compiler, lancer les tests et installer les outils.
-- Serveur de langage : installez `gopls` via `:MasonInstall gopls` (ou `go install golang.org/x/tools/gopls@latest` si vous préférez gérer les binaires vous-même).
-- Formatters/Linters utilisés par `null-ls` : `gofumpt`, `goimports-reviser`, `golines` (`go install mvdan.cc/gofumpt@latest`, etc.). Ils doivent être accessibles dans votre `$PATH`.
-- Debug Go : `dlv` (Delve) pour `dap-go` (`go install github.com/go-delve/delve/cmd/dlv@latest`).
-- Outils gopher.nvim (pour les mappings `GoTagAdd` / génération de code) : `gomodifytags`, `gotests`, `impl`, `iferr` (`go install github.com/fatih/gomodifytags@latest`, ...).
+- Installez [Go](https://go.dev/dl/) >= 1.21 et configurez `GOPATH` pour compiler/installer des binaires.
+- C’est la seule dépendance “système” côté Go : à partir de là `:MasonInstallAll` s’occupera d’installer `gopls`, `gofumpt`, `golines`, `delve`, outils gopher, etc. lors du premier lancement.
 
 ### Stack Python
-- Python 3.10+ et `pip`/`pipx`.
-- Serveurs de langage : utilisez `:MasonInstall pyright ruff-lsp` pour installer Pyright et Ruff LSP (ou `npm install -g pyright` si vous préférez les gérer hors Mason).
-- Outils `null-ls` : `black`, `isort`, `ruff` (`pip install black isort ruff` ou versions `pipx`).
-- Debug Python : `debugpy` pour `dap-python` (`pip install debugpy`).
+- Installez Python 3.10+ avec `pip`/`pipx` disponibles (pour pouvoir installer `debugpy` si besoin).
+- Une fois Python présent, `:MasonInstallAll` installera automatiquement Pyright, Ruff LSP, black, isort, ruff, debugpy et tous les outils utilisés par la config.
 
 ### Astuce
-- Après installation, lancez `:Mason` puis `:MasonInstallAll`/` :MasonInstall <serveur>` pour vous assurer que tous les binaires (gopls, pyright, ruff, etc.) sont présents avant d'ouvrir un projet Go/Python.
+- Dès que Go & Python sont installés, cloner ce repo puis lancez `nvim` et exécutez `:MasonInstallAll` (ou `:MasonInstall <liste>`) pour provisionner tous les binaires nécessaires avant de travailler sur vos projets.
 
 ## Installation
 
