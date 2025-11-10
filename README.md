@@ -19,7 +19,7 @@ A modern Neovim setup based on [NVChad](https://nvchad.com/), with advanced Go a
 
 ## Prerequisites
 
-- Neovim >= 0.9.0 (recommandé: 0.10+)
+- Neovim >= 0.11 (nécessaire pour `vim.lsp.config`)
 - Git
 - [Nerd Font](https://www.nerdfonts.com/) installée et sélectionnée dans votre terminal
 - (Optionnel) ripgrep, fd
@@ -63,6 +63,7 @@ nvim
 - Go: gopls, dap-go, gopher.nvim, linting, formatting, tests
 - Python: pyright, ruff-lsp, dap-python, dap-ui, linting, formatting, tests
 - null-ls (none-ls) pour l'intégration des outils externes
+- LSP configuré via `vim.lsp.config` (Neovim 0.11+), donc plus de warnings `require('lspconfig')`
 
 ### UI & Navigation
 - Catppuccin theme (modifiable dans plugins.lua)
