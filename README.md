@@ -19,10 +19,28 @@ A modern Neovim setup based on [NVChad](https://nvchad.com/), with advanced Go a
 
 ## Prerequisites
 
-- Neovim >= 0.11 (nécessaire pour `vim.lsp.config`)
-- Git
-- [Nerd Font](https://www.nerdfonts.com/) installée et sélectionnée dans votre terminal
-- (Optionnel) ripgrep, fd
+### Outils de base
+- Neovim >= 0.11 (indispensable car la config utilise `vim.lsp.config`)
+- Git (NVChad et Lazy ont besoin de git pour récupérer les plugins)
+- [Nerd Font](https://www.nerdfonts.com/) installée + sélectionnée dans votre terminal pour que les icônes s'affichent partout
+- `ripgrep` + `fd` (Telescope se base sur ces binaires pour des recherches rapides)
+- [`lazygit`](https://github.com/jesseduffield/lazygit) si vous voulez utiliser la commande `<leader>gg` / `:LazyGit`
+
+### Stack Go
+- [Go](https://go.dev/dl/) >= 1.21 avec `GOPATH` configuré pour pouvoir compiler, lancer les tests et installer les outils.
+- Serveur de langage : installez `gopls` via `:MasonInstall gopls` (ou `go install golang.org/x/tools/gopls@latest` si vous préférez gérer les binaires vous-même).
+- Formatters/Linters utilisés par `null-ls` : `gofumpt`, `goimports-reviser`, `golines` (`go install mvdan.cc/gofumpt@latest`, etc.). Ils doivent être accessibles dans votre `$PATH`.
+- Debug Go : `dlv` (Delve) pour `dap-go` (`go install github.com/go-delve/delve/cmd/dlv@latest`).
+- Outils gopher.nvim (pour les mappings `GoTagAdd` / génération de code) : `gomodifytags`, `gotests`, `impl`, `iferr` (`go install github.com/fatih/gomodifytags@latest`, ...).
+
+### Stack Python
+- Python 3.10+ et `pip`/`pipx`.
+- Serveurs de langage : utilisez `:MasonInstall pyright ruff-lsp` pour installer Pyright et Ruff LSP (ou `npm install -g pyright` si vous préférez les gérer hors Mason).
+- Outils `null-ls` : `black`, `isort`, `ruff` (`pip install black isort ruff` ou versions `pipx`).
+- Debug Python : `debugpy` pour `dap-python` (`pip install debugpy`).
+
+### Astuce
+- Après installation, lancez `:Mason` puis `:MasonInstallAll`/` :MasonInstall <serveur>` pour vous assurer que tous les binaires (gopls, pyright, ruff, etc.) sont présents avant d'ouvrir un projet Go/Python.
 
 ## Installation
 
