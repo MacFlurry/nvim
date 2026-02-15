@@ -1,5 +1,7 @@
+local stack = require "custom.stack"
+
 local options = {
-  ensure_installed = { "lua-language-server" }, -- not an option from mason.nvim
+  ensure_installed = stack.mason_tools,
 
   PATH = "skip",
 

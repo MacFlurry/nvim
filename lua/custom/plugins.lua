@@ -1,11 +1,23 @@
+local stack = require "custom.stack"
+
 local plugins = {
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
   },
+
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = stack.mason_tools
+      return opts
+    end,
+  },
+
   {
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
@@ -13,9 +25,11 @@ local plugins = {
       "nvim-lua/plenary.nvim",
     },
     keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Lazygit" }
-    }
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Lazygit" },
+      { "<leader>gl", "<cmd>LazyGit<cr>", desc = "Lazygit" },
+    },
   },
+
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
@@ -30,5 +44,108 @@ local plugins = {
       },
     },
   },
+
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    opts = function()
+      return require "custom.configs.conform"
+    end,
+    config = function(_, opts)
+      require("conform").setup(opts)
+    end,
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPost", "BufNewFile", "BufWritePost", "InsertLeave" },
+    config = function()
+      require("custom.configs.lint").setup()
+    end,
+  },
+
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+    },
+    init = function()
+      require("core.utils").load_mappings "dap"
+    end,
+    config = function()
+      require("custom.configs.dap").setup()
+    end,
+  },
+
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+  },
+
+  {
+    "leoluz/nvim-dap-go",
+    ft = { "go" },
+    dependencies = { "mfussenegger/nvim-dap" },
+    init = function()
+      require("core.utils").load_mappings "dap_go"
+    end,
+    config = function()
+      require("dap-go").setup()
+    end,
+  },
+
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = { "python" },
+    dependencies = { "mfussenegger/nvim-dap" },
+    config = function()
+      local mason_python = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+      local python = vim.fn.executable(mason_python) == 1 and mason_python or vim.fn.exepath "python3"
+      require("dap-python").setup(python)
+    end,
+  },
+
+  {
+    "olexsmir/gopher.nvim",
+    ft = { "go" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    init = function()
+      require("core.utils").load_mappings "gopher"
+    end,
+    opts = {},
+    config = function(_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function()
+      vim.cmd [[silent! GoInstallDeps]]
+    end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/neotest-python",
+    },
+    init = function()
+      require("core.utils").load_mappings "neotest"
+    end,
+    config = function()
+      require("custom.configs.neotest").setup()
+    end,
+  },
+
+  {
+    "pearofducks/ansible-vim",
+    ft = { "yaml", "yaml.ansible", "ansible" },
+  },
 }
+
 return plugins

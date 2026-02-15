@@ -1,5 +1,28 @@
 dofile(vim.g.base46_cache .. "lsp")
-require "nvchad.lsp"
+vim.diagnostic.config {
+  virtual_text = {
+    prefix = "",
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅙",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "󰋼",
+      [vim.diagnostic.severity.HINT] = "󰌵",
+    },
+  },
+  underline = true,
+  update_in_insert = false,
+}
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "single",
+})
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "single",
+  focusable = false,
+  relative = "cursor",
+})
 
 local M = {}
 local utils = require "core.utils"
