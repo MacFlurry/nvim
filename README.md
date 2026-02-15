@@ -1,124 +1,97 @@
-# NVChad + Dreamsofcode Go & Python Configuration
+# Custom Neovim Configuration (NvChad-based)
 
-A modern Neovim setup based on [NVChad](https://nvchad.com/), with advanced Go and Python support (inspiré de dreamsofcode), un dashboard stylé, et le thème Catppuccin.
+A custom Neovim setup built on top of [NvChad](https://nvchad.com/), focused on a full Go/Python developer workflow with YAML/Ansible support.
 
-## 🚀 Features
+## What Is Custom In This Config
 
-- ⚡️ Fast startup with lazy loading (NVChad core)
-- 🎨 Catppuccin theme (mocha, latte, etc.)
-- 🏠 Beautiful dashboard (alpha-nvim)
-- 🌳 File explorer (NvimTree)
-- 🔍 Fuzzy finding (Telescope)
-- 💡 LSP support (Go, Python, YAML, Ansible, autocompletion, diagnostics)
-- 🐍 Python: DAP, linting, formatting, tests
-- 🦫 Go: DAP, gopher.nvim, linting, formatting, tests
-- 📘 YAML/Ansible: LSP + linting + formatting
-- 🧩 Easy plugin management (custom/plugins.lua)
-- ⌨️ Intuitive keybindings (which-key integration)
-- 📝 Git integration (LazyGit)
-- 🖼️ Full Nerd Font support (pour les icônes)
+- Full LSP stack with explicit enablement (`vim.lsp.enable`) for:
+  - Go (`gopls`)
+  - Python (`pyright`, `ruff`)
+  - YAML (`yamlls`)
+  - Ansible (`ansiblels`)
+- Mason toolchain bootstrap for development tools (LSP, formatters, linters, debuggers)
+- DAP debugging stack:
+  - `nvim-dap`
+  - `nvim-dap-ui`
+  - `nvim-dap-go`
+  - `nvim-dap-python`
+- Test workflow with `neotest`:
+  - `neotest-go`
+  - `neotest-python`
+- Formatting via `conform.nvim`
+- Linting via `nvim-lint`
+- Go helpers via `gopher.nvim`
+- YAML/Ansible editing support via `ansible-vim`
+- LazyGit integration (`<leader>gg` / `<leader>gl`)
+- Improved UI readability tweaks:
+  - stronger `nvim-tree` cursor highlight
+  - improved comment highlight contrast
+  - terminal color tuning for LazyGit readability
 
 ## Prerequisites
 
-### Outils de base
-- Neovim >= 0.11 (indispensable car la config utilise `vim.lsp.config`)
-- Git (NVChad et Lazy ont besoin de git pour récupérer les plugins)
-- [Nerd Font](https://www.nerdfonts.com/) installée + sélectionnée dans votre terminal pour que les icônes s'affichent partout
-- `ripgrep` + `fd` (Telescope se base sur ces binaires pour des recherches rapides)
-- [`lazygit`](https://github.com/jesseduffield/lazygit) si vous voulez utiliser la commande `<leader>gg` / `:LazyGit`
-
-### Stack Go
-- Installez [Go](https://go.dev/dl/) >= 1.21 et configurez `GOPATH` pour compiler/installer des binaires.
-- C’est la seule dépendance “système” côté Go : à partir de là `:MasonInstallAll` s’occupera d’installer `gopls`, `gofumpt`, `golines`, `delve`, outils gopher, etc. lors du premier lancement.
-
-### Stack Python
-- Installez Python 3.10+ avec `pip`/`pipx` disponibles (pour pouvoir installer `debugpy` si besoin).
-- Une fois Python présent, `:MasonInstallAll` installera automatiquement Pyright, Ruff LSP, black, isort, ruff, debugpy et les outils de lint/format.
-
-### YAML / Ansible
-- La config active `yamlls` + `ansiblels`.
-- `:MasonInstallAll` installe aussi `yaml-language-server`, `yamlfmt`, `yamllint`, `ansible-language-server`, `ansible-lint`.
-
-### Astuce
-- Dès que Go & Python sont installés, cloner ce repo puis lancez `nvim` et exécutez `:MasonInstallAll` (ou `:MasonInstall <liste>`) pour provisionner tous les binaires nécessaires avant de travailler sur vos projets.
+- Neovim `>= 0.11`
+- Git
+- Nerd Font enabled in your terminal
+- `ripgrep` and `fd` (for Telescope)
+- `lazygit` (optional but recommended)
+- Language runtimes:
+  - Go (recommended `>= 1.21`)
+  - Python (`>= 3.10`)
 
 ## Installation
 
-1. Sauvegardez votre ancienne config :
 ```bash
+# backup existing config
 mv ~/.config/nvim ~/.config/nvim.bak
-```
-2. Clonez ce repo :
-```bash
-git clone https://gitlab.com/omega8280051/nvim.git ~/.config/nvim
-```
-3. Lancez Neovim :
-```bash
+
+# clone this repo
+git clone https://github.com/MacFlurry/nvim.git ~/.config/nvim
+
+# start neovim
 nvim
 ```
-- Laissez NVChad/Lazy installer tous les plugins et outils automatiquement.
 
-## Structure
+After first launch, install all Mason tools:
 
-```
-~/.config/nvim/
-├── init.lua
-├── lua/
-│   ├── custom/
-│   │   ├── plugins.lua      # Tous les plugins custom (Go, Python, UI...)
-│   │   ├── mappings.lua     # Raccourcis personnalisés (diagnostics, dap, etc.)
-│   │   └── configs/         # Configs LSP, DAP, lint, format, tests
-│   └── ...
+```vim
+:MasonInstallAll
 ```
 
-## Key Features
+## Basic Usage
 
-### Plugin Management
-- Utilise Lazy/NVChad pour une gestion efficace et rapide des plugins
-- Plugins custom dans `lua/custom/plugins.lua`
+- Open file tree: `<leader>e`
+- Reveal/focus current file in tree: `:NvimTreeFindFile`
+- Go to definition: `gd`
+- Hover documentation: `K`
+- Git blame (line): `<leader>gb`
+- Open LazyGit: `<leader>gg`
 
-### Développement Go, Python, YAML et Ansible
-- Go: gopls, dap-go, gopher.nvim, linting, formatting, tests
-- Python: pyright, ruff, dap-python, linting, formatting, tests
-- YAML/Ansible: yamlls, ansiblels, yamllint, ansible-lint, yamlfmt
-- Formatage via `conform.nvim`, lint via `nvim-lint`
-- LSP configuré via `vim.lsp.config` + activation explicite `vim.lsp.enable` (Neovim 0.11+)
+## Test / Validation
 
-### UI & Navigation
-- Catppuccin theme (modifiable dans plugins.lua)
-- Dashboard alpha-nvim (splash screen)
-- NvimTree pour l'exploration de fichiers
-- Which-key pour découvrir tous les raccourcis
+This repo includes basic non-regression checks:
 
-### Diagnostics & Keybindings
-- Menu diagnostics complet sur `<leader>d` (voir which-key)
-- Raccourcis DAP, Go, Python, etc. dans `mappings.lua`
-
-## Mise à jour majeure : v2.0.0
-- Migration complète vers NVChad
-- Stack Go & Python dreamsofcode
-- Thème Catppuccin par défaut
-- Dashboard alpha-nvim
-- Plugins et mappings custom réorganisés
-
-## Personnalisation
-- Ajoutez vos plugins dans `lua/custom/plugins.lua`
-- Ajoutez vos mappings dans `lua/custom/mappings.lua`
-- Modifiez les configs LSP/lint/format dans `lua/custom/configs/`
-
-## Tests (TDD)
-- Exécuter la suite de non-régression:
 ```bash
 tests/run.sh
 ```
 
-## Problèmes connus
-- Les icônes "?" dans NvimTree = police Nerd Font non sélectionnée dans le terminal
-- Le splash screen n'apparaît que si vous lancez `nvim` sans fichier
+## Structure
 
-## Contribuer
-N'hésitez pas à ouvrir une issue ou une MR pour toute suggestion ou amélioration !
-
----
-
-**Version : v2.0.0 (changement majeur, NVChad + Go/Python/Theme)** 
+```text
+~/.config/nvim/
+├── init.lua
+├── lua/
+│   ├── custom/
+│   │   ├── chadrc.lua
+│   │   ├── plugins.lua
+│   │   ├── mappings.lua
+│   │   ├── stack.lua
+│   │   └── configs/
+│   │       ├── lspconfig.lua
+│   │       ├── conform.lua
+│   │       ├── lint.lua
+│   │       ├── dap.lua
+│   │       └── neotest.lua
+│   └── ...
+└── tests/
+```
