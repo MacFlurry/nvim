@@ -44,6 +44,36 @@ vim.lsp.config("ansiblels", {
   cmd = { "ansible-language-server", "--stdio" },
   filetypes = { "yaml.ansible", "ansible" },
   root_markers = { "ansible.cfg", ".ansible-lint", ".git" },
+  on_new_config = function(new_config, root_dir)
+    local candidates = { root_dir .. "/.venv", root_dir .. "/venv" }
+    local selected_venv
+    local selected_bin
+
+    for _, venv in ipairs(candidates) do
+      local bin = venv .. "/bin"
+      if vim.fn.isdirectory(bin) == 1 then
+        selected_venv = venv
+        selected_bin = bin
+        break
+      end
+    end
+
+    if not selected_bin then
+      return
+    end
+
+    local local_ansiblels = selected_bin .. "/ansible-language-server"
+    if vim.fn.executable(local_ansiblels) == 1 then
+      new_config.cmd = { local_ansiblels, "--stdio" }
+    end
+
+    local sep = vim.loop.os_uname().sysname:match "Windows" and ";" or ":"
+    local path = selected_bin .. sep .. (vim.env.PATH or "")
+    new_config.cmd_env = vim.tbl_extend("force", new_config.cmd_env or {}, {
+      PATH = path,
+      VIRTUAL_ENV = selected_venv,
+    })
+  end,
 })
 
 for _, server in ipairs(stack.lsp_servers) do
