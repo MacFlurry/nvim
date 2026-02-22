@@ -23,10 +23,18 @@ A custom Neovim setup built on top of [NvChad](https://nvchad.com/), focused on 
 - Go helpers via `gopher.nvim`
 - YAML/Ansible editing support via `ansible-vim`
 - LazyGit integration (`<leader>gg` / `<leader>gl`)
+- Project-wide find/replace via `grug-far`:
+  - open global replace: `<leader>rr`
+  - open with current word prefilled: `<leader>rw`
+  - in `grug-far` buffer, `<localleader>` is set to `,` (`,r` replace, `,s` sync all)
 - Improved UI readability tweaks:
   - stronger `nvim-tree` cursor highlight
   - improved comment highlight contrast
   - terminal color tuning for LazyGit readability
+
+## Version
+
+- SemVer: `0.2.0`
 
 ## Prerequisites
 
@@ -64,6 +72,9 @@ After first launch, install all Mason tools:
 - Reveal/focus current file in tree: `:NvimTreeFindFile`
 - Go to definition: `gd`
 - Hover documentation: `K`
+- LSP rename symbol: `<leader>ra`
+- Global replace panel: `<leader>rr`
+- Global replace panel with word under cursor: `<leader>rw`
 - Git blame (line): `<leader>gb`
 - Open LazyGit: `<leader>gg`
 

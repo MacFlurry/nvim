@@ -146,6 +146,30 @@ local plugins = {
     "pearofducks/ansible-vim",
     ft = { "yaml", "yaml.ansible", "ansible" },
   },
+
+  {
+    "MagicDuck/grug-far.nvim",
+    cmd = "GrugFar",
+    opts = {},
+    keys = {
+      {
+        "<leader>rr",
+        function()
+          require("grug-far").open()
+        end,
+        desc = "Replace in project",
+      },
+      {
+        "<leader>rw",
+        function()
+          require("grug-far").open {
+            prefills = { search = vim.fn.expand "<cword>" },
+          }
+        end,
+        desc = "Replace current word in project",
+      },
+    },
+  },
 }
 
 return plugins
