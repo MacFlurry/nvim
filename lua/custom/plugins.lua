@@ -170,6 +170,30 @@ local plugins = {
       },
     },
   },
+
+  {
+    "ellisonleao/glow.nvim",
+    cmd = "Glow",
+    ft = { "markdown" },
+    opts = {
+      border = "rounded",
+      width_ratio = 0.9,
+      height_ratio = 0.9,
+    },
+    keys = {
+      {
+        "<leader>mr",
+        function()
+          if vim.fn.executable "glow" == 0 then
+            vim.notify("glow CLI manquant. Installe-le avec: brew install glow", vim.log.levels.WARN)
+            return
+          end
+          vim.cmd "Glow"
+        end,
+        desc = "Markdown rendu (Glow)",
+      },
+    },
+  },
 }
 
 return plugins
