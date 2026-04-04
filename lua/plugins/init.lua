@@ -66,9 +66,9 @@ local default_plugins = {
       require("indent_blankline").setup(opts)
     end,
   },
-
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
@@ -77,7 +77,7 @@ local default_plugins = {
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
-      require("nvim-treesitter.configs").setup(opts)
+      require("nvim-treesitter").setup(opts)
     end,
   },
 
