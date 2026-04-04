@@ -10,3 +10,4 @@ after
 **/.DS_Store
 .nvimlog
 
+conductor/
