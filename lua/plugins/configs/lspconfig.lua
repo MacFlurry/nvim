@@ -15,14 +15,19 @@ vim.diagnostic.config {
   update_in_insert = false,
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "single",
-})
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "single",
-  focusable = false,
-  relative = "cursor",
-})
+vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+  config = config or {}
+  config.border = "single"
+  return vim.lsp.handlers.hover(err, result, ctx, config)
+end
+
+vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+  config = config or {}
+  config.border = "single"
+  config.focusable = false
+  config.relative = "cursor"
+  return vim.lsp.handlers.signature_help(err, result, ctx, config)
+end
 
 local M = {}
 local utils = require "core.utils"
