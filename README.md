@@ -31,16 +31,19 @@ A custom Neovim setup built on top of [NvChad](https://nvchad.com/), focused on 
   - stronger `nvim-tree` cursor highlight
   - improved comment highlight contrast
   - terminal color tuning for LazyGit readability
+- High-performance Treesitter highlighting (branch `main`)
+- Modern indentation guides via `ibl.nvim` (v3)
 
 ## Version
 
-- SemVer: `0.2.0`
+- SemVer: `0.4.0`
 
 ## Prerequisites
 
-- Neovim `>= 0.11`
+- Neovim `>= 0.12`
 - Git
 - Nerd Font enabled in your terminal
+- `tree-sitter` CLI (for parser compilation)
 - `ripgrep` and `fd` (for Telescope)
 - `lazygit` (optional but recommended)
 - Language runtimes:
