@@ -55,8 +55,9 @@ local function set_nvimtree_highlights()
 end
 
 local function set_comment_highlights()
-  vim.api.nvim_set_hl(0, "Comment", { fg = "#a6adc8", italic = true })
-  vim.api.nvim_set_hl(0, "@comment", { fg = "#a6adc8", italic = true })
+  -- Utilise un gris plus sombre (#6c7086 au lieu de #a6adc8) pour un meilleur contraste
+  vim.api.nvim_set_hl(0, "Comment", { fg = "#6c7086", italic = true })
+  vim.api.nvim_set_hl(0, "@comment", { fg = "#6c7086", italic = true })
 end
 
 local nvimtree_hl_group = vim.api.nvim_create_augroup("CustomNvimTreeHighlights", { clear = true })
